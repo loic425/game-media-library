@@ -11,7 +11,7 @@
         "doctrine/doctrine-migrations-bundle": "^4.0",
         "doctrine/orm": "^3.6.3",
         "imagine/imagine": "^1.5",
-        "jolicode/media-bundle": "dev-main",
+        "jolicode/media-bundle": "^0.4.1",
         "pagerfanta/doctrine-orm-adapter": "^4.8",
         "phpdocumentor/reflection-docblock": "^6.0.3",
         "phpstan/phpdoc-parser": "^2.3.2",
@@ -111,14 +111,5 @@
         "symfony/stopwatch": "8.0.*",
         "symfony/web-profiler-bundle": "8.0.*",
         "zenstruck/foundry": "^2.9"
-    },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../../jolicode/MediaBundle",
-            "options": {
-                "symlink": true
-            }
-        }
-    ]
+    }
 }

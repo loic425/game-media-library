@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7aab01305bba23627f8ee38a72c25f75",
+    "content-hash": "6ec2395b7d6c90d3c3ab50009f242cfd",
     "packages": [
         {
             "name": "babdev/pagerfanta-bundle",
@@ -1490,11 +1490,17 @@
         },
         {
             "name": "jolicode/media-bundle",
-            "version": "dev-main",
+            "version": "v0.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jolicode/MediaBundle.git",
+                "reference": "056db4df5524a97504d35aaa3666afa95b3feda0"
+            },
             "dist": {
-                "type": "path",
-                "url": "../../jolicode/MediaBundle",
-                "reference": "2f318df8a003b7098aed6ede9150bdd2bb3f4db2"
+                "type": "zip",
+                "url": "https://api.github.com/repos/jolicode/MediaBundle/zipball/056db4df5524a97504d35aaa3666afa95b3feda0",
+                "reference": "056db4df5524a97504d35aaa3666afa95b3feda0",
+                "shasum": ""
             },
             "require": {
                 "ext-ctype": "*",
@@ -1561,19 +1567,14 @@
             "type": "symfony-bundle",
             "autoload": {
                 "psr-4": {
-                    "JoliCode\\MediaBundle\\Bridge\\EasyAdmin\\": "src/Bridge/EasyAdmin/src/",
-                    "JoliCode\\MediaBundle\\Bridge\\SonataAdmin\\": "src/Bridge/SonataAdmin/src/",
-                    "JoliCode\\MediaBundle\\Bridge\\Sylius\\": "src/Bridge/Sylius/src/",
+                    "JoliCode\\MediaBundle\\": "src/",
                     "JoliCode\\MediaBundle\\Bridge\\": "src/Bridge/src/",
-                    "JoliCode\\MediaBundle\\": "src/"
+                    "JoliCode\\MediaBundle\\Bridge\\Sylius\\": "src/Bridge/Sylius/src/",
+                    "JoliCode\\MediaBundle\\Bridge\\EasyAdmin\\": "src/Bridge/EasyAdmin/src/",
+                    "JoliCode\\MediaBundle\\Bridge\\SonataAdmin\\": "src/Bridge/SonataAdmin/src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "JoliCode\\MediaBundle\\Tests\\Application\\": "tests/src/Application/src/",
-                    "JoliCode\\MediaBundle\\Tests\\": "tests/src/"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1596,10 +1597,11 @@
                 "media",
                 "symfony"
             ],
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "support": {
+                "issues": "https://github.com/jolicode/MediaBundle/issues",
+                "source": "https://github.com/jolicode/MediaBundle/tree/v0.4.1"
+            },
+            "time": "2026-05-15T08:02:30+00:00"
         },
         {
             "name": "knplabs/knp-menu",
@@ -12168,9 +12170,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "jolicode/media-bundle": 20
-    },
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
