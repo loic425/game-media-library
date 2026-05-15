@@ -1,0 +1,4 @@
+app:
+    ui:
+        game: Game
+        games: Games

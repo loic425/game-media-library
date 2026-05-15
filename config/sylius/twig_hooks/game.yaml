@@ -1,0 +1,25 @@
+sylius_twig_hooks:
+    hooks:
+        'sylius_admin.game.create.content':
+            form:
+                component: 'App\Twig\Component\GameFormComponent'
+                props:
+                    form: '@=_context.form'
+                    resource: '@=_context.resource'
+
+        'sylius_admin.game.update.content':
+            form:
+                component: 'App\Twig\Component\GameFormComponent'
+                props:
+                    form: '@=_context.form'
+                    resource: '@=_context.resource'
+
+        'sylius_admin.game.show.content.header.title_block':
+            title:
+                template: '@SyliusBootstrapAdminUi/shared/crud/show/content/header/title_block/title.html.twig'
+                configuration:
+                    title: '@=_context.game.getName()'
+
+        'sylius_admin.game.show.content':
+            body:
+                template: 'game/show/content/body.html.twig'

@@ -1,0 +1,33 @@
+{% set game = hookable_metadata.context.game %}
+
+<div class="page-body">
+    <div class="container-xl">
+        <div class="card mb-3">
+            <div class="card-header">
+                <div class="card-title">
+                    Information
+                </div>
+            </div>
+            <div class="card-body">
+                {{ include('@JoliMediaSylius/_preview.html.twig', { media: game.cover, variation: 'joli_media_sylius_admin_large', className: 'media-preview' }) }}
+            </div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-header">
+                <div class="card-title">
+                    Videos
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row row-cols-4">
+                    {% for video in game.videos %}
+                        <div class="col">
+                            {{ include('@JoliMediaSylius/_preview.html.twig', { media: video.media, className: 'media-preview' }) }}
+                            <p>{{ video.media.filename }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

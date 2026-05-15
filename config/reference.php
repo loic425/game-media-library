@@ -1455,6 +1455,556 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     generate_final_classes?: bool|Param, // Default: true
  *     generate_final_entities?: bool|Param, // Default: false
  * }
+ * @psalm-type KnpMenuConfig = array{
+ *     providers?: array{
+ *         builder_alias?: bool|Param, // Default: true
+ *     },
+ *     twig?: array{
+ *         template?: scalar|Param|null, // Default: "@KnpMenu/menu.html.twig"
+ *     },
+ *     templating?: bool|Param, // Default: false
+ *     default_renderer?: scalar|Param|null, // Default: "twig"
+ * }
+ * @psalm-type TwigComponentConfig = array{
+ *     defaults?: array<string, string|array{ // Default: ["__deprecated__use_old_naming_behavior"]
+ *         template_directory?: scalar|Param|null, // Default: "components"
+ *         name_prefix?: scalar|Param|null, // Default: ""
+ *     }>,
+ *     anonymous_template_directory?: scalar|Param|null, // Defaults to `components`
+ *     profiler?: bool|array{ // Enables the profiler for Twig Component
+ *         enabled?: bool|Param, // Default: "%kernel.debug%"
+ *         collect_components?: bool|Param, // Collect components instances // Default: true
+ *     },
+ *     controllers_json?: scalar|Param|null, // Deprecated: The "twig_component.controllers_json" config option is deprecated, and will be removed in 3.0. // Default: null
+ * }
+ * @psalm-type LiveComponentConfig = array{
+ *     secret?: scalar|Param|null, // The secret used to compute fingerprints and checksums // Default: "%kernel.secret%"
+ *     fetch_credentials?: "same-origin"|"include"|"omit"|Param, // The default fetch credentials mode for all Live Components ('same-origin', 'include', 'omit') // Default: "same-origin"
+ * }
+ * @psalm-type UxIconsConfig = array{
+ *     icon_dir?: scalar|Param|null, // The local directory where icons are stored. // Default: "%kernel.project_dir%/assets/icons"
+ *     default_icon_attributes?: array<string, scalar|Param|null>,
+ *     icon_sets?: array<string, array{ // the icon set prefix (e.g. "acme") // Default: []
+ *         path?: scalar|Param|null, // The local icon set directory path. (cannot be used with 'alias')
+ *         alias?: scalar|Param|null, // The remote icon set identifier. (cannot be used with 'path')
+ *         icon_attributes?: array<string, scalar|Param|null>,
+ *         suffixes?: array<string, array{ // The suffix name (e.g. "solid", "20-solid") // Default: []
+ *             icon_attributes?: array<string, scalar|Param|null>,
+ *         }>,
+ *     }>,
+ *     aliases?: array<string, string|Param>,
+ *     iconify?: bool|array{ // Configuration for the remote icon service.
+ *         enabled?: bool|Param, // Default: true
+ *         on_demand?: bool|Param, // Whether to download icons "on demand". // Default: true
+ *         endpoint?: scalar|Param|null, // The endpoint for the Iconify icons API. // Default: "https://api.iconify.design"
+ *     },
+ *     ignore_not_found?: bool|Param, // Ignore error when an icon is not found. Set to 'true' to fail silently. // Default: false
+ * }
+ * @psalm-type SyliusTwigHooksConfig = array{
+ *     enable_autoprefixing?: bool|Param, // Default: false
+ *     hook_name_section_separator?: scalar|Param|null, // Default: false
+ *     supported_hookable_types?: array<string, scalar|Param|null>,
+ *     hooks?: array<string, array<string, bool|array{ // Default: []
+ *             enabled?: bool|Param, // Default: true
+ *             type?: scalar|Param|null, // Default: null
+ *             component?: scalar|Param|null, // Default: null
+ *             template?: scalar|Param|null, // Default: null
+ *             context?: array<string, mixed>,
+ *             props?: array<string, mixed>,
+ *             configuration?: array<string, mixed>,
+ *             priority?: int|Param, // Default: null
+ *         }>>,
+ * }
+ * @psalm-type SyliusTwigExtraConfig = array{
+ *     twig_ux?: array{
+ *         anonymous_component_template_prefixes?: array<string, scalar|Param|null>,
+ *     },
+ * }
+ * @psalm-type BabdevPagerfantaConfig = array{
+ *     default_view?: scalar|Param|null, // Default: "default"
+ *     default_twig_template?: scalar|Param|null, // Default: "@BabDevPagerfanta/default.html.twig"
+ *     exceptions_strategy?: array{
+ *         out_of_range_page?: "to_http_not_found"|"custom"|Param, // Default: "to_http_not_found"
+ *         not_valid_current_page?: "to_http_not_found"|"custom"|Param, // Default: "to_http_not_found"
+ *     },
+ * }
+ * @psalm-type SyliusResourceConfig = array{
+ *     resources?: array<string, array{ // Default: []
+ *         driver?: scalar|Param|null, // Default: "doctrine/orm"
+ *         options?: mixed, // Deprecated: The "options" node at "sylius_resource.resources..options" is deprecated and will be removed in 2.0.
+ *         templates?: scalar|Param|null,
+ *         state_machine_component?: scalar|Param|null, // Default: null
+ *         classes?: array{
+ *             model?: scalar|Param|null,
+ *             interface?: scalar|Param|null,
+ *             controller?: scalar|Param|null, // Default: "Sylius\\Bundle\\ResourceBundle\\Controller\\ResourceController"
+ *             repository?: scalar|Param|null,
+ *             factory?: scalar|Param|null, // Default: "Sylius\\Resource\\Factory\\Factory"
+ *             form?: scalar|Param|null, // Default: "Sylius\\Bundle\\ResourceBundle\\Form\\Type\\DefaultResourceType"
+ *         },
+ *         translation?: array{
+ *             options?: mixed, // Deprecated: The "options" node at "sylius_resource.resources..translation.options" is deprecated and will be removed in 2.0.
+ *             classes?: array{
+ *                 model?: scalar|Param|null,
+ *                 interface?: scalar|Param|null,
+ *                 controller?: scalar|Param|null, // Default: "Sylius\\Bundle\\ResourceBundle\\Controller\\ResourceController"
+ *                 repository?: scalar|Param|null,
+ *                 factory?: scalar|Param|null, // Default: "Sylius\\Resource\\Factory\\Factory"
+ *                 form?: scalar|Param|null, // Default: "Sylius\\Bundle\\ResourceBundle\\Form\\Type\\DefaultResourceType"
+ *             },
+ *         },
+ *     }>,
+ *     settings?: array{
+ *         paginate?: mixed, // Default: null
+ *         limit?: mixed, // Default: null
+ *         allowed_paginate?: list<int|Param>,
+ *         default_page_size?: int|Param, // Default: 10
+ *         default_templates_dir?: scalar|Param|null, // Default: null
+ *         sortable?: bool|Param, // Default: false
+ *         sorting?: mixed, // Default: null
+ *         filterable?: bool|Param, // Default: false
+ *         criteria?: mixed, // Default: null
+ *         state_machine_component?: scalar|Param|null, // Default: null
+ *     },
+ *     translation?: bool|array{
+ *         enabled?: bool|Param, // Default: true
+ *         locale_provider?: scalar|Param|null, // Default: "sylius.translation_locale_provider.immutable"
+ *     },
+ *     drivers?: list<"doctrine/orm"|"doctrine/mongodb-odm"|"doctrine/phpcr-odm"|Param>,
+ *     mapping?: array{
+ *         imports?: list<scalar|Param|null>,
+ *         paths?: list<scalar|Param|null>,
+ *     },
+ *     authorization_checker?: scalar|Param|null, // Default: "sylius.resource_controller.authorization_checker.disabled"
+ *     routing_path_bc_layer?: bool|Param,
+ *     path_segment_name_generator?: scalar|Param|null, // Specify a path name generator to use. // Default: "sylius.metadata.path_segment_name_generator.dash"
+ * }
+ * @psalm-type SyliusGridConfig = array{
+ *     drivers?: list<"doctrine/orm"|"doctrine/phpcr-odm"|Param>,
+ *     templates?: array{
+ *         filter?: array<string, scalar|Param|null>,
+ *         action?: array<string, scalar|Param|null>,
+ *         bulk_action?: array<string, scalar|Param|null>,
+ *     },
+ *     grids?: array<string, array{ // Default: []
+ *         extends?: scalar|Param|null,
+ *         provider?: scalar|Param|null,
+ *         driver?: array{
+ *             name?: scalar|Param|null, // Default: "doctrine/orm"
+ *             options?: list<mixed>,
+ *         },
+ *         sorting?: array<string, "asc"|"desc"|Param>,
+ *         limits?: list<int|Param>,
+ *         fields?: array<string, array{ // Default: []
+ *             type?: scalar|Param|null,
+ *             label?: scalar|Param|null,
+ *             path?: scalar|Param|null,
+ *             sortable?: scalar|Param|null,
+ *             enabled?: scalar|Param|null, // Default: true
+ *             position?: scalar|Param|null, // Default: 100
+ *             options?: list<mixed>,
+ *         }>,
+ *         filters?: array<string, array{ // Default: []
+ *             type?: scalar|Param|null,
+ *             label?: scalar|Param|null,
+ *             enabled?: scalar|Param|null, // Default: true
+ *             template?: scalar|Param|null,
+ *             position?: scalar|Param|null, // Default: 100
+ *             options?: list<mixed>,
+ *             form_options?: list<mixed>,
+ *             default_value?: mixed,
+ *         }>,
+ *         actions?: array<string, array<string, array{ // Default: []
+ *                 type?: scalar|Param|null,
+ *                 label?: scalar|Param|null,
+ *                 enabled?: scalar|Param|null, // Default: true
+ *                 template?: scalar|Param|null,
+ *                 icon?: scalar|Param|null,
+ *                 position?: scalar|Param|null, // Default: 100
+ *                 options?: list<mixed>,
+ *             }>>,
+ *         removals?: array<mixed>,
+ *     }>,
+ * }
+ * @psalm-type SyliusAdminUiConfig = array{
+ *     routing?: array<string, scalar|Param|null>,
+ * }
+ * @psalm-type JoliMediaConfig = array{
+ *     default_library?: scalar|Param|null, // Default: null
+ *     libraries?: array<string, array{ // Default: []
+ *         original?: array{
+ *             flysystem?: scalar|Param|null, // The Flysystem service id for the original storage.
+ *             enable_serve_using_php?: bool|Param, // If true, the original files may be served using PHP if the web server cannot serve it. This might be useful for private files. // Default: false
+ *             trash_path?: scalar|Param|null, // Path to the trash directory where deleted files are moved. This path is relative to the original storage root and is hidden when listing files using the bridges. // Default: ".trash"
+ *             url_generator?: array{
+ *                 path?: scalar|Param|null, // Default: "/media/original"
+ *                 strategy?: scalar|Param|null, // Default: "folder"
+ *             },
+ *         },
+ *         cache?: array{
+ *             flysystem?: scalar|Param|null, // The Flysystem service id for the cache storage.
+ *             must_store_when_generating_url?: bool|Param, // If true, variation files will be generated, if missing, when their URL is generated. // Default: false
+ *             url_generator?: array{
+ *                 path?: scalar|Param|null, // Default: "/media/cache"
+ *                 strategy?: scalar|Param|null, // Default: "folder"
+ *             },
+ *         },
+ *         enable_auto_webp?: bool|Param, // If true, enables automatic generation of WebP variations for the media: the configured variations will all be duplicated in WebP format, in addition to the original format. // Default: false
+ *         pixel_ratios?: list<float|Param>,
+ *         variations?: array<string, array{ // Default: []
+ *             format?: scalar|Param|null,
+ *             enable_auto_webp?: bool|Param, // If true and the format config attribute is not set or different from "webp", enables an additionnal webp version of the variation.
+ *             pixel_ratios?: list<float|Param>,
+ *             transformers?: list<array{ // Default: []
+ *                 type?: scalar|Param|null, // Default: null
+ *                 allow_downscale?: bool|Param, // Default: true
+ *                 allow_upscale?: bool|Param, // Default: true
+ *                 background_color?: scalar|Param|null,
+ *                 crop_position?: scalar|Param|null, // Default: null
+ *                 height?: scalar|Param|null,
+ *                 width?: scalar|Param|null,
+ *                 mode?: scalar|Param|null,
+ *                 position_x?: scalar|Param|null,
+ *                 position_y?: scalar|Param|null,
+ *                 start_x?: scalar|Param|null,
+ *                 start_y?: scalar|Param|null,
+ *             }>,
+ *             post_processors?: array{
+ *                 gifsicle?: bool|array{
+ *                     enabled?: bool|Param, // Enable the gifsicle post-processor // Default: true
+ *                     optimize?: int|Param, // Attempt to shrink the file sizes of GIF animations. Level determines how much optimization is done; higher levels take longer, but may have better results // Default: 3
+ *                     lossy?: int|Param, // Alter image colors to shrink output file size at the cost of artifacts and noise. Lossiness determines how many artifacts are allowed; higher values can result in smaller file sizes, but cause more artifacts // Default: 20
+ *                     colors?: int|Param, // Reduce the number of colors to N // Default: 256
+ *                 },
+ *                 jpegoptim?: bool|array{
+ *                     enabled?: bool|Param, // Enable the jpegoptim post-processor // Default: true
+ *                     strip_all?: bool|Param, // Strip all (Comment & Exif) markers from output file // Default: true
+ *                     progressive?: bool|Param, // Force all output files to be progressive // Default: true
+ *                     max_quality?: int|Param, // Sets the maximum image quality factor // Default: 80
+ *                 },
+ *                 mozjpeg?: bool|array{
+ *                     enabled?: bool|Param, // Enable the mozjpeg post-processor // Default: true
+ *                     optimize?: bool|Param, // Optimize Huffman table // Default: false
+ *                     progressive?: bool|Param, // Create progressive JPEG file // Default: false
+ *                     quality?: int|Param, // Compression quality // Default: 80
+ *                 },
+ *                 oxipng?: bool|array{
+ *                     enabled?: bool|Param, // Enable the oxipng post-processor // Default: true
+ *                     optimization?: int|Param, // Optimization level. A higher level means slower, but better compression // Default: 4
+ *                     strip?: list<"safe"|"all"|Param>,
+ *                     zopfli?: bool|Param, // Use the slower but better compressing Zopfli algorithm // Default: false
+ *                 },
+ *                 pngquant?: bool|array{
+ *                     enabled?: bool|Param, // Enable the pngquant post-processor // Default: true
+ *                     quality?: scalar|Param|null, // Don't save below min, use fewer colors below max // Default: "75-85"
+ *                     speed?: int|Param, // Speed/quality trade-off. 1=slow, 4=default, 11=fast & rough // Default: 4
+ *                 },
+ *             },
+ *             pre_processors?: list<scalar|Param|null>,
+ *             processors?: array{
+ *                 cwebp?: bool|array{
+ *                     enabled?: bool|Param, // Enable the cwebp post-processor // Default: true
+ *                     near_lossless?: array{
+ *                         quality?: int|Param, // Specify the compression factor for RGB channels between 0 and 100 // Default: 40
+ *                         method?: int|Param, // Specify the compression method to use. This parameter controls the trade off between encoding speed and the compressed file size and quality // Default: 6
+ *                         metadata?: list<"none"|"all"|"icc"|"exif"|"xmp"|Param>,
+ *                         near_lossless?: int|Param, // Specify the level of near-lossless image preprocessing // Default: 0
+ *                     },
+ *                     lossy?: array{
+ *                         quality?: int|Param, // Specify the compression factor for RGB channels between 0 and 100 // Default: 75
+ *                         method?: int|Param, // Specify the compression method to use. This parameter controls the trade off between encoding speed and the compressed file size and quality // Default: 6
+ *                         af?: bool|Param, // Turns auto-filter on. This algorithm will spend additional time optimizing the filtering strength to reach a well-balanced quality // Default: true
+ *                         metadata?: list<"none"|"all"|"icc"|"exif"|"xmp"|Param>,
+ *                         pass?: int|Param, // Set a maximum number of passes to use during the dichotomy used by options -size or -psnr // Default: 10
+ *                     },
+ *                 },
+ *                 gif2webp?: bool|array{
+ *                     enabled?: bool|Param, // Enable the gif2webp post-processor // Default: true
+ *                     lossy?: bool|Param, // Encode the image using lossy compression // Default: true
+ *                     min_size?: bool|Param, // Encode image to achieve smallest size. This disables key frame insertion and picks the dispose method resulting in the smallest output for each frame // Default: true
+ *                     metadata?: list<"none"|"all"|"icc"|"xmp"|Param>,
+ *                 },
+ *                 gifsicle?: bool|array{
+ *                     enabled?: bool|Param, // Enable the gifsicle post-processor // Default: true
+ *                     optimize?: int|Param, // Attempt to shrink the file sizes of GIF animations. Level determines how much optimization is done; higher levels take longer, but may have better results // Default: 3
+ *                     lossy?: int|Param, // Alter image colors to shrink output file size at the cost of artifacts and noise. Lossiness determines how many artifacts are allowed; higher values can result in smaller file sizes, but cause more artifacts // Default: 20
+ *                     colors?: int|Param, // Reduce the number of colors to N // Default: 256
+ *                 },
+ *                 imagine?: bool|array{
+ *                     enabled?: bool|Param, // Enable the imagine post-processor // Default: true
+ *                     quality?: int|Param, // Sets the default image compression quality // Default: 80
+ *                     jpeg_quality?: int|Param, // Sets the image compression quality for JPEG images // Default: 80
+ *                     png_quality?: int|Param, // Sets the image compression quality for PNG images // Default: 80
+ *                 },
+ *             },
+ *             voters?: list<array{ // Default: []
+ *                 type?: scalar|Param|null,
+ *                 format?: scalar|Param|null,
+ *                 path?: scalar|Param|null,
+ *                 mime_type?: scalar|Param|null,
+ *                 max?: scalar|Param|null,
+ *                 min?: scalar|Param|null,
+ *                 voters?: list<array{ // Default: []
+ *                     type?: scalar|Param|null,
+ *                     format?: scalar|Param|null,
+ *                     path?: scalar|Param|null,
+ *                     mime_type?: scalar|Param|null,
+ *                     max?: scalar|Param|null,
+ *                     min?: scalar|Param|null,
+ *                     voters?: list<array{ // Default: []
+ *                         type?: scalar|Param|null,
+ *                         format?: scalar|Param|null,
+ *                         path?: scalar|Param|null,
+ *                         mime_type?: scalar|Param|null,
+ *                         max?: scalar|Param|null,
+ *                         min?: scalar|Param|null,
+ *                         voters?: array<mixed>,
+ *                     }>,
+ *                 }>,
+ *             }>,
+ *         }>,
+ *         post_processors?: array{
+ *             gifsicle?: bool|array{
+ *                 enabled?: bool|Param, // Enable the gifsicle post-processor // Default: true
+ *                 optimize?: int|Param, // Attempt to shrink the file sizes of GIF animations. Level determines how much optimization is done; higher levels take longer, but may have better results // Default: 3
+ *                 lossy?: int|Param, // Alter image colors to shrink output file size at the cost of artifacts and noise. Lossiness determines how many artifacts are allowed; higher values can result in smaller file sizes, but cause more artifacts // Default: 20
+ *                 colors?: int|Param, // Reduce the number of colors to N // Default: 256
+ *             },
+ *             jpegoptim?: bool|array{
+ *                 enabled?: bool|Param, // Enable the jpegoptim post-processor // Default: true
+ *                 strip_all?: bool|Param, // Strip all (Comment & Exif) markers from output file // Default: true
+ *                 progressive?: bool|Param, // Force all output files to be progressive // Default: true
+ *                 max_quality?: int|Param, // Sets the maximum image quality factor // Default: 80
+ *             },
+ *             mozjpeg?: bool|array{
+ *                 enabled?: bool|Param, // Enable the mozjpeg post-processor // Default: true
+ *                 optimize?: bool|Param, // Optimize Huffman table // Default: false
+ *                 progressive?: bool|Param, // Create progressive JPEG file // Default: false
+ *                 quality?: int|Param, // Compression quality // Default: 80
+ *             },
+ *             oxipng?: bool|array{
+ *                 enabled?: bool|Param, // Enable the oxipng post-processor // Default: true
+ *                 optimization?: int|Param, // Optimization level. A higher level means slower, but better compression // Default: 4
+ *                 strip?: list<"safe"|"all"|Param>,
+ *                 zopfli?: bool|Param, // Use the slower but better compressing Zopfli algorithm // Default: false
+ *             },
+ *             pngquant?: bool|array{
+ *                 enabled?: bool|Param, // Enable the pngquant post-processor // Default: true
+ *                 quality?: scalar|Param|null, // Don't save below min, use fewer colors below max // Default: "75-85"
+ *                 speed?: int|Param, // Speed/quality trade-off. 1=slow, 4=default, 11=fast & rough // Default: 4
+ *             },
+ *         },
+ *         processors?: array{
+ *             cwebp?: bool|array{
+ *                 enabled?: bool|Param, // Enable the cwebp post-processor // Default: true
+ *                 near_lossless?: array{
+ *                     quality?: int|Param, // Specify the compression factor for RGB channels between 0 and 100 // Default: 40
+ *                     method?: int|Param, // Specify the compression method to use. This parameter controls the trade off between encoding speed and the compressed file size and quality // Default: 6
+ *                     metadata?: list<"none"|"all"|"icc"|"exif"|"xmp"|Param>,
+ *                     near_lossless?: int|Param, // Specify the level of near-lossless image preprocessing // Default: 0
+ *                 },
+ *                 lossy?: array{
+ *                     quality?: int|Param, // Specify the compression factor for RGB channels between 0 and 100 // Default: 75
+ *                     method?: int|Param, // Specify the compression method to use. This parameter controls the trade off between encoding speed and the compressed file size and quality // Default: 6
+ *                     af?: bool|Param, // Turns auto-filter on. This algorithm will spend additional time optimizing the filtering strength to reach a well-balanced quality // Default: true
+ *                     metadata?: list<"none"|"all"|"icc"|"exif"|"xmp"|Param>,
+ *                     pass?: int|Param, // Set a maximum number of passes to use during the dichotomy used by options -size or -psnr // Default: 10
+ *                 },
+ *             },
+ *             gif2webp?: bool|array{
+ *                 enabled?: bool|Param, // Enable the gif2webp post-processor // Default: true
+ *                 lossy?: bool|Param, // Encode the image using lossy compression // Default: true
+ *                 min_size?: bool|Param, // Encode image to achieve smallest size. This disables key frame insertion and picks the dispose method resulting in the smallest output for each frame // Default: true
+ *                 metadata?: list<"none"|"all"|"icc"|"xmp"|Param>,
+ *             },
+ *             gifsicle?: bool|array{
+ *                 enabled?: bool|Param, // Enable the gifsicle post-processor // Default: true
+ *                 optimize?: int|Param, // Attempt to shrink the file sizes of GIF animations. Level determines how much optimization is done; higher levels take longer, but may have better results // Default: 3
+ *                 lossy?: int|Param, // Alter image colors to shrink output file size at the cost of artifacts and noise. Lossiness determines how many artifacts are allowed; higher values can result in smaller file sizes, but cause more artifacts // Default: 20
+ *                 colors?: int|Param, // Reduce the number of colors to N // Default: 256
+ *             },
+ *             imagine?: bool|array{
+ *                 enabled?: bool|Param, // Enable the imagine post-processor // Default: true
+ *                 quality?: int|Param, // Sets the default image compression quality // Default: 80
+ *                 jpeg_quality?: int|Param, // Sets the image compression quality for JPEG images // Default: 80
+ *                 png_quality?: int|Param, // Sets the image compression quality for PNG images // Default: 80
+ *             },
+ *         },
+ *     }>,
+ *     pre_processors?: list<scalar|Param|null>,
+ *     processors?: array{
+ *         cwebp?: array{
+ *             binary?: scalar|Param|null, // Default: "%joli_media.binary.cwebp%"
+ *             identify_binary?: scalar|Param|null, // Default: "%joli_media.binary.identify%"
+ *             options?: bool|array{
+ *                 enabled?: bool|Param, // Enable the cwebp post-processor // Default: true
+ *                 near_lossless?: array{
+ *                     quality?: int|Param, // Specify the compression factor for RGB channels between 0 and 100 // Default: 40
+ *                     method?: int|Param, // Specify the compression method to use. This parameter controls the trade off between encoding speed and the compressed file size and quality // Default: 6
+ *                     metadata?: list<"none"|"all"|"icc"|"exif"|"xmp"|Param>,
+ *                     near_lossless?: int|Param, // Specify the level of near-lossless image preprocessing // Default: 0
+ *                 },
+ *                 lossy?: array{
+ *                     quality?: int|Param, // Specify the compression factor for RGB channels between 0 and 100 // Default: 75
+ *                     method?: int|Param, // Specify the compression method to use. This parameter controls the trade off between encoding speed and the compressed file size and quality // Default: 6
+ *                     af?: bool|Param, // Turns auto-filter on. This algorithm will spend additional time optimizing the filtering strength to reach a well-balanced quality // Default: true
+ *                     metadata?: list<"none"|"all"|"icc"|"exif"|"xmp"|Param>,
+ *                     pass?: int|Param, // Set a maximum number of passes to use during the dichotomy used by options -size or -psnr // Default: 10
+ *                 },
+ *             },
+ *         },
+ *         gif2webp?: array{
+ *             binary?: scalar|Param|null, // Default: "%joli_media.binary.gif2webp%"
+ *             options?: bool|array{
+ *                 enabled?: bool|Param, // Enable the gif2webp post-processor // Default: true
+ *                 lossy?: bool|Param, // Encode the image using lossy compression // Default: true
+ *                 min_size?: bool|Param, // Encode image to achieve smallest size. This disables key frame insertion and picks the dispose method resulting in the smallest output for each frame // Default: true
+ *                 metadata?: list<"none"|"all"|"icc"|"xmp"|Param>,
+ *             },
+ *         },
+ *         gifsicle?: array{
+ *             binary?: scalar|Param|null, // Default: "%joli_media.binary.gifsicle%"
+ *             options?: bool|array{
+ *                 enabled?: bool|Param, // Enable the gifsicle post-processor // Default: true
+ *                 optimize?: int|Param, // Attempt to shrink the file sizes of GIF animations. Level determines how much optimization is done; higher levels take longer, but may have better results // Default: 3
+ *                 lossy?: int|Param, // Alter image colors to shrink output file size at the cost of artifacts and noise. Lossiness determines how many artifacts are allowed; higher values can result in smaller file sizes, but cause more artifacts // Default: 20
+ *                 colors?: int|Param, // Reduce the number of colors to N // Default: 256
+ *             },
+ *         },
+ *         imagine?: array{
+ *             driver?: "gd"|"gmagick"|"imagick"|Param, // The Imagine driver to use for image processing. Available options: "gd", "gmagick", "imagick". // Default: "imagick"
+ *             options?: bool|array{
+ *                 enabled?: bool|Param, // Enable the imagine post-processor // Default: true
+ *                 quality?: int|Param, // Sets the default image compression quality // Default: 80
+ *                 jpeg_quality?: int|Param, // Sets the image compression quality for JPEG images // Default: 80
+ *                 png_quality?: int|Param, // Sets the image compression quality for PNG images // Default: 80
+ *             },
+ *         },
+ *         imagick?: array{ // Deprecated: The "imagick" processor is deprecated, use the "imagine" processor with the "imagick" driver instead.
+ *             options?: bool|array{
+ *                 enabled?: bool|Param, // Enable the imagine post-processor // Default: true
+ *                 quality?: int|Param, // Sets the default image compression quality // Default: 80
+ *                 jpeg_quality?: int|Param, // Sets the image compression quality for JPEG images // Default: 80
+ *                 png_quality?: int|Param, // Sets the image compression quality for PNG images // Default: 80
+ *             },
+ *         },
+ *     },
+ *     post_processors?: array{
+ *         gifsicle?: array{
+ *             binary?: scalar|Param|null, // Default: "%joli_media.binary.gifsicle%"
+ *             options?: bool|array{
+ *                 enabled?: bool|Param, // Enable the gifsicle post-processor // Default: true
+ *                 optimize?: int|Param, // Attempt to shrink the file sizes of GIF animations. Level determines how much optimization is done; higher levels take longer, but may have better results // Default: 3
+ *                 lossy?: int|Param, // Alter image colors to shrink output file size at the cost of artifacts and noise. Lossiness determines how many artifacts are allowed; higher values can result in smaller file sizes, but cause more artifacts // Default: 20
+ *                 colors?: int|Param, // Reduce the number of colors to N // Default: 256
+ *             },
+ *         },
+ *         jpegoptim?: array{
+ *             binary?: scalar|Param|null, // Default: "%joli_media.binary.jpegoptim%"
+ *             options?: bool|array{
+ *                 enabled?: bool|Param, // Enable the jpegoptim post-processor // Default: true
+ *                 strip_all?: bool|Param, // Strip all (Comment & Exif) markers from output file // Default: true
+ *                 progressive?: bool|Param, // Force all output files to be progressive // Default: true
+ *                 max_quality?: int|Param, // Sets the maximum image quality factor // Default: 80
+ *             },
+ *         },
+ *         mozjpeg?: array{
+ *             binary?: scalar|Param|null, // Default: "%joli_media.binary.mozjpeg%"
+ *             options?: bool|array{
+ *                 enabled?: bool|Param, // Enable the mozjpeg post-processor // Default: true
+ *                 optimize?: bool|Param, // Optimize Huffman table // Default: false
+ *                 progressive?: bool|Param, // Create progressive JPEG file // Default: false
+ *                 quality?: int|Param, // Compression quality // Default: 80
+ *             },
+ *         },
+ *         oxipng?: array{
+ *             binary?: scalar|Param|null, // Default: "%joli_media.binary.oxipng%"
+ *             options?: bool|array{
+ *                 enabled?: bool|Param, // Enable the oxipng post-processor // Default: true
+ *                 optimization?: int|Param, // Optimization level. A higher level means slower, but better compression // Default: 4
+ *                 strip?: list<"safe"|"all"|Param>,
+ *                 zopfli?: bool|Param, // Use the slower but better compressing Zopfli algorithm // Default: false
+ *             },
+ *         },
+ *         pngquant?: array{
+ *             binary?: scalar|Param|null, // Default: "%joli_media.binary.pngquant%"
+ *             options?: bool|array{
+ *                 enabled?: bool|Param, // Enable the pngquant post-processor // Default: true
+ *                 quality?: scalar|Param|null, // Don't save below min, use fewer colors below max // Default: "75-85"
+ *                 speed?: int|Param, // Speed/quality trade-off. 1=slow, 4=default, 11=fast & rough // Default: 4
+ *             },
+ *         },
+ *     },
+ * }
+ * @psalm-type JoliMediaSyliusConfig = array{
+ *     pagination?: array{
+ *         per_page?: list<scalar|Param|null>,
+ *     },
+ *     upload?: array{
+ *         max_files?: int|Param, // Maximum number of files that can be uploaded at once. // Default: null
+ *         max_file_size?: int|Param, // Maximum file size for uploads, in Megabytes. // Default: 20
+ *         accepted_files?: list<scalar|Param|null>,
+ *     },
+ *     visibility?: array{
+ *         show_markdown_code?: bool|Param, // If true, shows the media Markdown code on the media show page. // Default: false
+ *         show_html_code?: bool|Param, // If true, shows the media HTML code on the media show page. // Default: false
+ *         show_variations_action_regenerate?: bool|Param, // If true, shows the action to regenerate variations on the media show page. // Default: false
+ *         show_variations_list?: bool|Param, // If true, shows the list of variations in a dedicated tab on the media show page. // Default: true
+ *         show_variations_list_admin_variations?: bool|Param, // If true, shows the variations defined in by the admin bridge in the variations list tab. // Default: false
+ *         show_variations_stored?: bool|Param, // If true, shows whether a variation is already stored in the media library or not. // Default: false
+ *     },
+ * }
+ * @psalm-type ZenstruckFoundryConfig = array{
+ *     auto_refresh_proxies?: bool|Param|null, // Deprecated: Since 2.0 auto_refresh_proxies defaults to true and this configuration has no effect. // Whether to auto-refresh proxies by default (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#auto-refresh) // Default: null
+ *     enable_auto_refresh_with_lazy_objects?: bool|Param|null, // Enable auto-refresh using PHP 8.4 lazy objects (cannot be enabled if PHP < 8.4). // Default: null
+ *     faker?: array{ // Configure the faker used by your factories.
+ *         locale?: scalar|Param|null, // The default locale to use for faker. // Default: null
+ *         seed?: scalar|Param|null, // Deprecated: The "faker.seed" configuration is deprecated and will be removed in 3.0. Use environment variable "FOUNDRY_FAKER_SEED" instead. // Random number generator seed to produce the same fake values every run. // Default: null
+ *         manage_seed?: bool|Param, // Automatically manage faker seed to ensure consistent data between test runs. // Default: true
+ *         service?: scalar|Param|null, // Service id for custom faker instance. // Default: null
+ *     },
+ *     instantiator?: array{ // Configure the default instantiator used by your object factories.
+ *         use_constructor?: bool|Param, // Use the constructor to instantiate objects. // Default: true
+ *         allow_extra_attributes?: bool|Param, // Whether or not to skip attributes that do not correspond to properties. // Default: false
+ *         always_force_properties?: bool|Param, // Whether or not to skip setters and force set object properties (public/private/protected) directly. // Default: false
+ *         service?: scalar|Param|null, // Service id of your custom instantiator. // Default: null
+ *     },
+ *     global_state?: list<scalar|Param|null>,
+ *     persistence?: array{
+ *         flush_once?: bool|Param, // Flush only once per call of `PersistentObjectFactory::create()` in userland. // Default: false
+ *     },
+ *     orm?: array{
+ *         auto_persist?: bool|Param, // Deprecated: Since 2.4 auto_persist defaults to true and this configuration has no effect. // Automatically persist entities when created. // Default: true
+ *         reset?: array{
+ *             connections?: list<scalar|Param|null>,
+ *             entity_managers?: list<scalar|Param|null>,
+ *             mode?: \Zenstruck\Foundry\ORM\ResetDatabase\ResetDatabaseMode::SCHEMA|\Zenstruck\Foundry\ORM\ResetDatabase\ResetDatabaseMode::MIGRATE|Param, // Reset mode to use with ResetDatabase trait // Default: "schema"
+ *             migrations?: array{
+ *                 configurations?: list<scalar|Param|null>,
+ *             },
+ *         },
+ *     },
+ *     mongo?: array{
+ *         auto_persist?: bool|Param, // Deprecated: Since 2.4 auto_persist defaults to true and this configuration has no effect. // Automatically persist documents when created. // Default: true
+ *         reset?: array{
+ *             document_managers?: list<scalar|Param|null>,
+ *         },
+ *     },
+ *     make_factory?: array{
+ *         default_namespace?: scalar|Param|null, // Default namespace where factories will be created by maker. // Default: "Factory"
+ *         add_hints?: bool|Param, // Add "beginner" hints in the created factory. // Default: true
+ *     },
+ *     make_story?: array{
+ *         default_namespace?: scalar|Param|null, // Default namespace where stories will be created by maker. // Default: "Story"
+ *     },
+ * }
+ * @psalm-type WhiteOctoberPagerfantaConfig = array{ // Deprecated: The "white_october_pagerfanta" configuration node is deprecated, migrate your configuration to the "babdev_pagerfanta" configuration node.
+ *     exceptions_strategy?: array{
+ *         out_of_range_page?: scalar|Param|null, // Default: "to_http_not_found"
+ *         not_valid_current_page?: scalar|Param|null, // Default: "to_http_not_found"
+ *     },
+ *     default_view?: scalar|Param|null, // Default: "default"
+ * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
@@ -1468,6 +2018,19 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     twig_extra?: TwigExtraConfig,
  *     security?: SecurityConfig,
  *     monolog?: MonologConfig,
+ *     knp_menu?: KnpMenuConfig,
+ *     twig_component?: TwigComponentConfig,
+ *     live_component?: LiveComponentConfig,
+ *     ux_icons?: UxIconsConfig,
+ *     sylius_twig_hooks?: SyliusTwigHooksConfig,
+ *     sylius_twig_extra?: SyliusTwigExtraConfig,
+ *     babdev_pagerfanta?: BabdevPagerfantaConfig,
+ *     sylius_resource?: SyliusResourceConfig,
+ *     sylius_grid?: SyliusGridConfig,
+ *     sylius_admin_ui?: SyliusAdminUiConfig,
+ *     joli_media?: JoliMediaConfig,
+ *     joli_media_sylius?: JoliMediaSyliusConfig,
+ *     white_october_pagerfanta?: WhiteOctoberPagerfantaConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -1484,6 +2047,19 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         security?: SecurityConfig,
  *         monolog?: MonologConfig,
  *         maker?: MakerConfig,
+ *         knp_menu?: KnpMenuConfig,
+ *         twig_component?: TwigComponentConfig,
+ *         live_component?: LiveComponentConfig,
+ *         ux_icons?: UxIconsConfig,
+ *         sylius_twig_hooks?: SyliusTwigHooksConfig,
+ *         sylius_twig_extra?: SyliusTwigExtraConfig,
+ *         babdev_pagerfanta?: BabdevPagerfantaConfig,
+ *         sylius_resource?: SyliusResourceConfig,
+ *         sylius_grid?: SyliusGridConfig,
+ *         sylius_admin_ui?: SyliusAdminUiConfig,
+ *         joli_media?: JoliMediaConfig,
+ *         joli_media_sylius?: JoliMediaSyliusConfig,
+ *         zenstruck_foundry?: ZenstruckFoundryConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
@@ -1498,6 +2074,18 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         twig_extra?: TwigExtraConfig,
  *         security?: SecurityConfig,
  *         monolog?: MonologConfig,
+ *         knp_menu?: KnpMenuConfig,
+ *         twig_component?: TwigComponentConfig,
+ *         live_component?: LiveComponentConfig,
+ *         ux_icons?: UxIconsConfig,
+ *         sylius_twig_hooks?: SyliusTwigHooksConfig,
+ *         sylius_twig_extra?: SyliusTwigExtraConfig,
+ *         babdev_pagerfanta?: BabdevPagerfantaConfig,
+ *         sylius_resource?: SyliusResourceConfig,
+ *         sylius_grid?: SyliusGridConfig,
+ *         sylius_admin_ui?: SyliusAdminUiConfig,
+ *         joli_media?: JoliMediaConfig,
+ *         joli_media_sylius?: JoliMediaSyliusConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -1513,6 +2101,19 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         twig_extra?: TwigExtraConfig,
  *         security?: SecurityConfig,
  *         monolog?: MonologConfig,
+ *         knp_menu?: KnpMenuConfig,
+ *         twig_component?: TwigComponentConfig,
+ *         live_component?: LiveComponentConfig,
+ *         ux_icons?: UxIconsConfig,
+ *         sylius_twig_hooks?: SyliusTwigHooksConfig,
+ *         sylius_twig_extra?: SyliusTwigExtraConfig,
+ *         babdev_pagerfanta?: BabdevPagerfantaConfig,
+ *         sylius_resource?: SyliusResourceConfig,
+ *         sylius_grid?: SyliusGridConfig,
+ *         sylius_admin_ui?: SyliusAdminUiConfig,
+ *         joli_media?: JoliMediaConfig,
+ *         joli_media_sylius?: JoliMediaSyliusConfig,
+ *         zenstruck_foundry?: ZenstruckFoundryConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,
