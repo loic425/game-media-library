@@ -16,6 +16,13 @@ class GameType extends AbstractType
         $builder
             ->add('name')
             ->add('cover', MediaChoiceType::class)
+            ->add('images', LiveCollectionType::class, [
+                'required' => false,
+                'entry_type' => GameImageType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+            ])
             ->add('videos', LiveCollectionType::class, [
                 'required' => false,
                 'entry_type' => GameVideoType::class,

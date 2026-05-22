@@ -15,6 +15,23 @@
         <div class="card mb-3">
             <div class="card-header">
                 <div class="card-title">
+                    Images
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+                    {% for image in game.images %}
+                        <div class="col">
+                            {{ include('@JoliMediaSylius/_preview.html.twig', { media: image.media, variation: 'joli_media_sylius_admin_large', className: 'media-preview' }) }}
+                            <p>{{ image.media.filename }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-header">
+                <div class="card-title">
                     Videos
                 </div>
             </div>

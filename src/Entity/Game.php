@@ -63,9 +63,16 @@ class Game implements ResourceInterface
     #[ORM\OneToMany(targetEntity: GameVideo::class, mappedBy: 'game', cascade: ['persist'], orphanRemoval: true)]
     private Collection $videos;
 
+    /**
+     * @var Collection<int, Media
+     */
+    #[ORM\OneToMany(targetEntity: GameImage::class, mappedBy: 'game', cascade: ['persist'], orphanRemoval: true)]
+    private Collection $images;
+
     public function __construct()
     {
         $this->videos = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -120,5 +127,30 @@ class Game implements ResourceInterface
     public function getVideos(): Collection
     {
         return $this->videos;
+    }
+
+    public function addImage(GameImage $image): static
+    {
+        if (!$this->images->contains($image)) {
+            $this->images->add($image);
+            $image->game = $this;
+        }
+
+        return $this;
+    }
+
+    public function removeImage(GameImage $image): static
+    {
+        // set the owning side to null (unless already changed)
+        if ($this->images->removeElement($image) && $image->game === $this) {
+            $image->game = null;
+        }
+
+        return $this;
+    }
+
+    public function getImages(): Collection
+    {
+        return $this->images;
     }
 }
